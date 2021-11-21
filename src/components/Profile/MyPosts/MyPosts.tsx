@@ -1,18 +1,26 @@
 import React from "react";
 import p from "./MyPosts.module.css"
 import Post from "./Post/Post";
+import {ProfileTypeProps} from "../Profile";
 
-const MyPosts = () => {
+const MyPosts = (props: ProfileTypeProps) => {
+
+    let myPostsElement = props.myPosts.map(post => {
+        return (
+            <Post title={post.postTitle} likesCount={post.likesCount}/>
+        )
+    })
+
     return (
-        <div className="posts">
-            <div>My posts</div>
+        <div className={p.postsBlock}>
+            <div><h3>My posts</h3></div>
             <div>
-                <textarea></textarea>
-                <button>Add Post</button>
+                <div><textarea></textarea></div>
+                <div>
+                    <button>Add Post</button>
+                </div>
             </div>
-            <Post title = "Title 1"/>
-            <Post title = "Title 2"/>
-            <Post title = "Title 3"/>
+            {myPostsElement}
         </div>
     )
 }
