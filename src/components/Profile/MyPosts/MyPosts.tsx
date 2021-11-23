@@ -2,12 +2,13 @@ import React from "react";
 import p from "./MyPosts.module.css"
 import Post from "./Post/Post";
 import {ProfileTypeProps} from "../Profile";
+import {PostPropsType} from "../../../Redux/state";
 
-const MyPosts = (props: ProfileTypeProps) => {
+const MyPosts = (props: {state:Array<PostPropsType>}) => {
 
-    let myPostsElement = props.myPosts.map(post => {
+    let myPostsElement = props.state.map(post => {
         return (
-            <Post title={post.postTitle} likesCount={post.likesCount}/>
+            <Post title={post.postTitle} likesCount={post.likesCount} imageLink={post.imageLink}/>
         )
     })
 

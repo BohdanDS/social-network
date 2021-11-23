@@ -1,21 +1,23 @@
 import s from "./Dialogs.module.css"
 import DialogItem from "./DiaologItem/DialogItem";
-import {DialogItemPropsType, MessagePropsType} from "../../index";
 import Message from "./Message/Message";
+import {DialogItemPropsType, MessagePropsType} from "../../Redux/state";
 
 type DialogPropsType = {
-    usersArray : Array<DialogItemPropsType>
-    messageArray: Array<MessagePropsType>
+    state: {
+        messages: Array<MessagePropsType>,
+        dialogs: Array<DialogItemPropsType>
+    }
 }
 
 const Dialogs = (props:DialogPropsType) => {
 
-    let dialogsElement = props.usersArray.map((dialog)=> {
+    let dialogsElement = props.state.dialogs.map((dialog)=> {
         return (
             <DialogItem id={dialog.id} dialogTitle={dialog.name}/>
         )
     })
-    let messageElement = props.messageArray.map((message) => {
+    let messageElement = props.state.messages.map((message) => {
         return (
             <Message id={message.id} messageText={message.messageText}/>
         )
