@@ -1,3 +1,5 @@
+import {rerenderEntireThree} from "../render";
+
 export type DialogItemPropsType = {
     id: number
     name: string
@@ -11,7 +13,6 @@ export type PostPropsType = {
     id: number
     postTitle: string
     likesCount: number
-    imageLink: string
 }
 export type ProfilePageType = {
     posts: Array<PostPropsType>
@@ -25,11 +26,27 @@ export type StateType = {
     profilePage: ProfilePageType
     messagePage: MessagePageType
     friends: FriendsSideBarArray
+    newPostText: string
 }
 
 export type FriendsSideBar = {
     avatar: string
     name: string
+}
+
+export const addPost = () => {
+    if (state.newPostText){
+        let newPost: PostPropsType = {id: 5, postTitle: state.newPostText, likesCount: 0}
+        state.profilePage.posts.push(newPost)
+        changeNewPostText('')
+        rerenderEntireThree(state)
+
+    }
+}
+
+export const changeNewPostText = (pMessage: string) => {
+    state.newPostText = pMessage
+    rerenderEntireThree(state)
 }
 
 export type FriendsSideBarArray = Array<FriendsSideBar>
@@ -40,20 +57,17 @@ let state: StateType = {
         posts: [{
             id: 1,
             postTitle: "Post 1 Props",
-            likesCount: 12,
-            imageLink: "https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png"
+            likesCount: 12
         },
             {
                 id: 2,
                 postTitle: "My post 2",
-                likesCount: 10,
-                imageLink: "https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png"
+                likesCount: 10
             },
             {
-                id: 2,
+                id: 3,
                 postTitle: "My post 3",
-                likesCount: 9991,
-                imageLink: "https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png"
+                likesCount: 9991
             }]
     },
     messagePage: {
@@ -104,6 +118,7 @@ let state: StateType = {
             }, {
                 avatar: "https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png",
                 name: 'Drug'
-            }]
+            }],
+    newPostText:'New Post Text'
 }
 export default state

@@ -2,6 +2,7 @@ import s from "./Dialogs.module.css"
 import DialogItem from "./DiaologItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogItemPropsType, MessagePropsType} from "../../Redux/state";
+import React from "react";
 
 type DialogPropsType = {
     state: {
@@ -22,6 +23,13 @@ const Dialogs = (props:DialogPropsType) => {
             <Message id={message.id} messageText={message.messageText}/>
         )
     })
+
+    let newMessageElement = React.createRef<HTMLTextAreaElement>()
+
+    const alertMessage = () => {
+        alert(newMessageElement.current?.value)
+    }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItem}>
@@ -29,6 +37,10 @@ const Dialogs = (props:DialogPropsType) => {
             </div>
             <div className= {s.messages}>
                 {messageElement}
+                <textarea ref={newMessageElement}></textarea>
+                <div>
+                    <button onClick={alertMessage}>Sent message</button>
+                </div>
             </div>
         </div>
     )
