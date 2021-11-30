@@ -9,6 +9,9 @@ type DialogPropsType = {
         messages: Array<MessagePropsType>,
         dialogs: Array<DialogItemPropsType>
     }
+    newMessageText:string
+    addNewMessage:()=>void
+    changeTextMessage: (message:string) =>void
 }
 
 const Dialogs = (props:DialogPropsType) => {
@@ -26,8 +29,16 @@ const Dialogs = (props:DialogPropsType) => {
 
     let newMessageElement = React.createRef<HTMLTextAreaElement>()
 
-    const alertMessage = () => {
-        alert(newMessageElement.current?.value)
+    const addMessageText = () => {
+        if (newMessageElement.current)
+        props.addNewMessage()
+        props.changeTextMessage('')
+    }
+
+    const changeNewMessageText = () => {
+      if(newMessageElement.current){
+          props.changeTextMessage(newMessageElement.current.value)
+      }
     }
 
     return (
@@ -37,9 +48,9 @@ const Dialogs = (props:DialogPropsType) => {
             </div>
             <div className= {s.messages}>
                 {messageElement}
-                <textarea ref={newMessageElement}></textarea>
+                <textarea value={props.newMessageText} ref={newMessageElement} onChange={changeNewMessageText}></textarea>
                 <div>
-                    <button onClick={alertMessage}>Sent message</button>
+                    <button onClick={addMessageText}>Sent message</button>
                 </div>
             </div>
         </div>

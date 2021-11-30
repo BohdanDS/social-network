@@ -27,6 +27,7 @@ export type StateType = {
     messagePage: MessagePageType
     friends: FriendsSideBarArray
     newPostText: string
+    newTextMessage:string
 }
 
 export type FriendsSideBar = {
@@ -48,6 +49,20 @@ export const changeNewPostText = (pMessage: string) => {
     state.newPostText = pMessage
     rerenderEntireThree(state)
 }
+
+export const addMessage = () => {
+    if(state.newTextMessage){
+        let newMessage:MessagePropsType = {id: 10, messageText: state.newTextMessage}
+        state.messagePage.messages.push(newMessage)
+        rerenderEntireThree(state)
+    }
+}
+
+export const changeNewMessageText = (tMessage:string) => {
+    state.newTextMessage = tMessage
+    rerenderEntireThree(state)
+}
+
 
 export type FriendsSideBarArray = Array<FriendsSideBar>
 
@@ -119,6 +134,7 @@ let state: StateType = {
                 avatar: "https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png",
                 name: 'Drug'
             }],
-    newPostText:'New Post Text'
+    newPostText:'New Post Text',
+    newTextMessage: "New Text Message"
 }
 export default state

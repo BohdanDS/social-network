@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {addPost, changeNewPostText, StateType} from "./Redux/state";
+import {addMessage, addPost, changeNewMessageText, changeNewPostText, StateType} from "./Redux/state";
 
 
 export let rerenderEntireThree =(state:StateType) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state ={state} addPost={addPost} changeNewPostText={changeNewPostText}/>
+            <App state ={state} addPost={addPost} changeNewPostText={changeNewPostText} addMessage={addMessage} changeNewMessageText={changeNewMessageText}/>
         </React.StrictMode>,
         document.getElementById('root')
     );
