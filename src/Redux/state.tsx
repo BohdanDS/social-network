@@ -34,21 +34,47 @@ export type FriendsSideBar = {
 
 export type FriendsSideBarArray = Array<FriendsSideBar>
 
-export type StoreType ={
+export type StoreType = {
     _state: StateType
-    _callSubscriber:() => void
-    subscribe:(callback: ()=>void)=>void
-    getState:()=> StateType
-    addPost:()=>void
-    addMessage:()=>void
-    changeNewMessageText:(tMessage: string) => void
-    changeNewPostText: (pMessage: string)=> void
+    _callSubscriber: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => StateType
+    addPost: () => void
+    addMessage: () => void
+    changeNewMessageText: (tMessage: string) => void
+    changeNewPostText: (pMessage: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 
+const addMessage = 'ADD-MESSAGE'
+const changeMessage = 'CHANGE-MESSAGE'
+const addPost = 'ADD-POST'
+const changePost = 'CHANGE-POST'
 
 
-let store:StoreType = {
+type AddMessageActionType = {
+    type: 'ADD-MESSAGE'
+}
+
+type ChangeMessageActionType = {
+    type: 'CHANGE-MESSAGE'
+    message: string
+}
+
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+type ChangePostActionType = {
+    type: 'CHANGE-POST'
+    postText: string
+}
+
+export type ActionsTypes = AddMessageActionType | ChangeMessageActionType | AddPostActionType | ChangePostActionType
+
+
+let store: StoreType = {
     _state: {
         profilePage: {
             posts: [{
@@ -117,22 +143,22 @@ let store:StoreType = {
             name: 'Drug'
         }],
         newPostText: 'New Post Text',
-        newTextMessage: "New Text Message"
+        newTextMessage: "New Text Message..."
     },
     _callSubscriber() {
-        console.log('Changed')
+        // console.log('Changed')
     },
-    subscribe  (callback)  {
+    subscribe(callback) {
         this._callSubscriber = callback  //----Observer pattern----
         // console.log('rerender was updated from index.tsx')
     },
 
-    getState () {
+    getState() {
         return this._state
     },
 
-    addPost () {
-        if (this._state.newPostText){
+    addPost() {
+        if (this._state.newPostText) {
             let newPost: PostPropsType = {id: 5, postTitle: this._state.newPostText, likesCount: 0}
             this._state.profilePage.posts.push(newPost)
             this.changeNewPostText('')
@@ -140,22 +166,63 @@ let store:StoreType = {
 
         }
     },
-    addMessage () {
+    addMessage() {
         if (this._state.newTextMessage) {
             let newMessage: MessagePropsType = {id: 10, messageText: this._state.newTextMessage}
             this._state.messagePage.messages.push(newMessage)
             this._callSubscriber()
         }
     },
-    changeNewMessageText  (tMessage: string)  {
+    changeNewMessageText(tMessage: string) {
         this._state.newTextMessage = tMessage
         this._callSubscriber()
     },
-    changeNewPostText (pMessage: string) {
+    changeNewPostText(pMessage: string) {
         this._state.newPostText = pMessage
         this._callSubscriber()
+    },
+    dispatch(action) {
+        if (action.type === addMessage) {
+            if (this._state.newTextMessage) {
+                let newMessage: MessagePropsType = {id: 10, messageText: this._state.newTextMessage}
+                this._state.messagePage.messages.push(newMessage)
+                this.changeNewMessageText('')
+                this._callSubscriber()
+            }
+        } else if (action.type === changeMessage) {
+            this._state.newTextMessage = action.message
+            this._callSubscriber()
+        } else if (action.type === addPost) {
+            if (this._state.newPostText) {
+                let newPost: PostPropsType = {id: 5, postTitle: this._state.newPostText, likesCount: 0}
+                this._state.profilePage.posts.push(newPost)
+                this.changeNewPostText('')
+                this._callSubscriber()
+
+            }
+        } else if (action.type === changePost) {
+            this._state.newPostText = action.postText
+            this._callSubscriber()
+        }
     }
 
 }
+
+export const addPostActionCreator = (): AddPostActionType => ({type: addPost})
+
+
+export const changePostActionCreator = (title: string): ChangePostActionType => ({
+    type: changePost,
+    postText: title
+})
+
+
+export const addMessageActionCreator = (): AddMessageActionType => ({type: addMessage})
+
+export const changeMessageActionCreator = (message: string): ChangeMessageActionType => ({
+    type: changeMessage,
+    message: message
+})
+
 
 export default store

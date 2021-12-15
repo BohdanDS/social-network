@@ -1,8 +1,15 @@
 import s from "./Dialogs.module.css"
 import DialogItem from "./DiaologItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogItemPropsType, MessagePropsType} from "../../Redux/state";
+import {
+    ActionsTypes,
+    addMessageActionCreator,
+    changeMessageActionCreator,
+    DialogItemPropsType,
+    MessagePropsType
+} from "../../Redux/state";
 import React from "react";
+import {type} from "os";
 
 type DialogPropsType = {
     state: {
@@ -12,6 +19,7 @@ type DialogPropsType = {
     newMessageText:string
     addNewMessage:()=>void
     changeTextMessage: (message:string) =>void
+    dispatch:(action: ActionsTypes) =>void
 }
 
 const Dialogs = (props:DialogPropsType) => {
@@ -30,14 +38,18 @@ const Dialogs = (props:DialogPropsType) => {
     let newMessageElement = React.createRef<HTMLTextAreaElement>()
 
     const addMessageText = () => {
-        if (newMessageElement.current)
-        props.addNewMessage()
-        props.changeTextMessage('')
+        // if (newMessageElement.current)
+        // props.addNewMessage()
+        // props.changeTextMessage('')
+        props.dispatch(addMessageActionCreator())
+
+
     }
 
     const changeNewMessageText = () => {
       if(newMessageElement.current){
-          props.changeTextMessage(newMessageElement.current.value)
+          // props.changeTextMessage(newMessageElement.current.value)
+          props.dispatch(changeMessageActionCreator(newMessageElement.current.value))
       }
     }
 
