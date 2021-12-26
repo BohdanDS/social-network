@@ -1,9 +1,7 @@
 import React from 'react';
-import {ActionsTypes, DialogPropsType} from "../../redux/store";
 import {addMessageCreator, updateNewMessageTextCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import StoreContext from "../../StoreContext";
-import store from "../../redux/redux-store";
 
 export type StateDialogsType = {
     // state: DialogPropsType
