@@ -1,54 +1,46 @@
-import React from "react";
-import p from "./MyPosts.module.css"
+import React, {useRef} from 'react';
+import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ActionsTypes, addPostActionCreator, changePostActionCreator, PostPropsType} from "../../../Redux/state";
+import {PostTypeProps,} from "../../../redux/store";
 
-type MyPostType = {
-    state: Array<PostPropsType>
-    addPost: () => void
+export type MyPostsType = {
+    posts: Array<PostTypeProps>
     newPostText: string
-    changeNewPostText: (postTitle: string) => void
-    dispatch: (action: ActionsTypes) =>void
+    onAddPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
+const MyPosts = ({posts, newPostText, updateNewPostText, onAddPost }: MyPostsType) => {
 
-const MyPosts = (props: MyPostType) => {
+    const postsElements = posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    const newPostElement = useRef<HTMLTextAreaElement>(null);
 
-    let myPostsElement = props.state.map(post => {
-        return (
-            <Post title={post.postTitle} likesCount={post.likesCount} id={post.id}/>
-        )
-    })
-
-
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
-
-    const addPostHandler = () => {
-        if (newPostElement.current) {
-            props.dispatch(addPostActionCreator())
+    const addPost = () => {
+        if (newPostElement.current?.value) {
+            onAddPost()
         }
     }
-
-    const onChangeHandler = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            props.dispatch(changePostActionCreator(text))
+    const onPostChange = () => {
+        let text = newPostElement.current?.value;
+        if (text){
+            updateNewPostText(text)
         }
     }
-
 
     return (
-        <div className={p.postsBlock}>
-            <div><h3>My posts</h3></div>
-            <div>
-                <div><textarea ref={newPostElement} value={props.newPostText} onChange={onChangeHandler}/></div>
-                <div>
-                    <button onClick={addPostHandler}>Add Post</button>
-                </div>
+        <div className='content'>
+            <h3>My posts</h3>
+            <textarea
+                className={s.textarea}
+                ref={newPostElement}
+                value={newPostText}
+                onChange={onPostChange}
+            />
+            <button onClick={addPost}>Add post</button>
+            <div className='posts'>
+                {postsElements}
             </div>
-            {myPostsElement}
         </div>
     )
 }
-
-export default MyPosts
+export default MyPosts;

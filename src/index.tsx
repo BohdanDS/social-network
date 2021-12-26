@@ -1,26 +1,21 @@
-import './index.css';
-import store, {StateType} from "./Redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import reportWebVitals from './reportWebVitals';
+import store from "./redux/redux-store";
+import {Provider} from "./StoreContext";
 
 
-
-let rerenderEntireThree = (state:StateType) => {
+let rerenderEntireTree = () => {
     ReactDOM.render(
-        <React.StrictMode>
-            <App state={state} addPost={store.addPost.bind(store)} changeNewPostText={store.changeNewPostText.bind(store)} addMessage={store.addMessage.bind(store)}
-                 changeNewMessageText={store.changeNewMessageText.bind(store)} dispatch = {store.dispatch.bind(store)}/>
-        </React.StrictMode>,
+        <Provider store={store}>
+            <App/>
+        </Provider>,
         document.getElementById('root')
     );
 }
+rerenderEntireTree();
+store.subscribe(rerenderEntireTree);
 
-rerenderEntireThree(store.getState())
-
-store.subscribe(()=>rerenderEntireThree(store.getState()))
-
-
-
-
+reportWebVitals();

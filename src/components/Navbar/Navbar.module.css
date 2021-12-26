@@ -1,15 +1,15 @@
-.nav {
-    grid-area: n;
-    background-color: cadetblue;
-    padding: 20px;
-
+.nav ul {
+    position: sticky;
+    top: 40px;
 }
-.item a{
-    color: aliceblue;
-    text-decoration: none;
+.item {
+    margin-bottom: 24px;
+    color: #444;
 }
-
-.item a.activeLink {
-    color: darkslategrey;
-    text-decoration: none;
+.item a {
+    color: inherit;
+    font-size: 18px;
+}
+.item a.active {
+    color: #be185d;
 }

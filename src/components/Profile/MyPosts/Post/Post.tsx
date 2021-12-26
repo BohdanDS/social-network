@@ -1,23 +1,17 @@
-import React from "react";
-import p from "./Post.module.css"
+import React from 'react';
+import s from './Post.module.css';
+import {PostTypeProps} from "../../../../redux/store";
 
+const Post = (props: PostTypeProps) => {
+  return (
+    <div className={s.post}>
+      <img src="https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png" alt="profile_img"/>
+      {props.message}
+      <div>
+        <span> Likes:{props.likesCount}</span>
+      </div>
 
-type PostType = {
-    id: number
-    title: string
-    likesCount: number
+    </div>
+  );
 }
-
-const Post: React.FC<PostType> = (props:PostType) => {
-    return (
-
-            <div className={p.item}>
-                <img
-                    src ="https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png" />
-                {props.title}
-                <div><span>Likes: {props.likesCount}</span></div>
-            </div>
-    )
-}
-
-export default Post
+export default Post;

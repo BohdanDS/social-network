@@ -1,8 +1,16 @@
-.item {
-    color: darkslategrey;
-    margin-top: 10px;
+.post {
+    /*display: flex;*/
+    /*align-items: center;*/
+    margin: 20px 0;
+    background: #fff;
+    box-shadow: 0px 1px 15px 0px rgb(51 51 51 / 20%);
+    padding: 30px;
+    border-radius: 0.75rem;
 }
-.item img {
-    width: 40px;
+.post img {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
 }

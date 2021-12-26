@@ -1,61 +1,19 @@
-import React from "react";
-import s from "./Navbar.module.css";
-import { NavLink } from "react-router-dom";
-import Friends from "../Friends/Friends";
-import { FriendsSideBarArray } from "../../Redux/state";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import s from './Navbar.module.css';
 
-export type NavBarTypeProps = {
-  friends: FriendsSideBarArray;
-};
-
-const Navbar = (props: NavBarTypeProps) => {
+const Navbar = () => {
   return (
-    <>
-      <nav className={s.nav}>
-        <div className={s.item}>
-          <NavLink
-            to="/profile"
-            className={(x) => (x.isActive ? s.activeLink : "")}
-          >
-            Profile
-          </NavLink>
-        </div>
-        <div className={s.item}>
-          <NavLink
-            to="/dialogs"
-            className={(x) => (x.isActive ? s.activeLink : "")}
-          >
-            Dialogs
-          </NavLink>
-        </div>
-        <div className={s.item}>
-          <NavLink
-            to="/news"
-            className={(x) => (x.isActive ? s.activeLink : "")}
-          >
-            News
-          </NavLink>
-        </div>
-        <div className={s.item}>
-          <NavLink
-            to="/music"
-            className={(x) => (x.isActive ? s.activeLink : "")}
-          >
-            Music
-          </NavLink>
-        </div>
-        <div className={s.item}>
-          <NavLink
-            to="/settings"
-            className={(x) => (x.isActive ? s.activeLink : "")}
-          >
-            Settings
-          </NavLink>
-        </div>
-        <Friends friends={props.friends} />
-      </nav>
-    </>
+    <nav className={s.nav}>
+      <ul>
+        {/* eslint-disable-next-line react/jsx-no-undef */}
+        <li className={`${s.item} ${s.active}`}><NavLink to="/profile" className={(navActive) => navActive.isActive ? s.active : ""}>Profile</NavLink></li>
+        <li className={s.item}><NavLink to="/dialogs" className={(navActive) => navActive.isActive ? s.active : ""}>Messages</NavLink></li>
+        <li className={s.item}><NavLink to="/news" className={(navActive) => navActive.isActive ? s.active : ""}>News</NavLink></li>
+        <li className={s.item}><NavLink to="/music" className={(navActive) => navActive.isActive ? s.active : ""}>Music</NavLink></li>
+        <li className={s.item}><NavLink to="/settings" className={(navActive) => navActive.isActive ? s.active : ""}>Settings</NavLink></li>
+      </ul>
+    </nav>
   );
-};
-
+}
 export default Navbar;
