@@ -1,36 +1,32 @@
 export {}
-// import profileReducer, {ProfileActionsTypes} from "./profile-reducer";
-// import dialogsReducer, {DialogsActionsTypes} from "./dialogs-reducer";
-// import sidebarReducer, {SideBarActionsTypes} from "./sidebar-reducer";
-//
-export type FriendType = {
+type SidebarType = {
+  friends: Array<FriendType>
+}
+ type FriendType = {
   id: number
   name: string
 }
-export type PostTypeProps = {
+type PostProps = {
   id: number,
   message: string,
   likesCount: number
 }
-export type PostsType = {
-  posts: Array<PostTypeProps>
+type PostsType = {
+  posts: Array<PostProps>
   newPostText: string
 }
-export type DialogItemType = {
+type DialogItemType = {
   name: string
   id: number
 }
-export type MessageType = {
+type MessageType = {
   message: string
   id: number
 }
-export type DialogPropsType = {
+type DialogPropsType = {
   dialogs: Array<DialogItemType>
   messages: Array<MessageType>
   newMessage: string
-}
-export type SidebarType = {
-  friends: Array<FriendType>
 }
 // export type StateType = {
 //   profilePage: PostsType

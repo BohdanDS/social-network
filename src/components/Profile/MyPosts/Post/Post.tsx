@@ -1,8 +1,9 @@
 import React from 'react';
 import s from './Post.module.css';
-import {PostTypeProps} from "../../../../redux/store";
+import {PostType} from "../../../../redux/profile-reducer";
 
-const Post = (props: PostTypeProps) => {
+
+const Post = (props: PostType) => {
   return (
     <div className={s.post}>
       <img src="https://e7.pngegg.com/pngimages/906/448/png-clipart-silhouette-person-person-with-helmut-animals-logo.png" alt="profile_img"/>

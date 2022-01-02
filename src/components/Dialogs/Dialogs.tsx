@@ -2,25 +2,20 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogPropsType} from "../../redux/store";
+import {DialogsPropsType} from "./DialogsContainer";
 
-export type StateDialogsType = {
-    state: DialogPropsType
-    // dispatch: (action: ActionsTypes) => void
-    onAddMessage: () => void
-    onChangeMessage: (text: string) => void
-};
 
-const Dialogs = ({state, onAddMessage, onChangeMessage}: StateDialogsType) => {
+const Dialogs = ({dialogsItems, newMessage, onAddMessage, onChangeMessage, messages}: DialogsPropsType) => {
 
-    let dialogsElements = state.dialogs
+
+    let dialogsElements = dialogsItems
         .map(d => <DialogItem name={d.name} id={d.id}/>)
 
-    let messagesElements = state.messages
+    let messagesElements = messages
         .map(m => <Message message={m.message} id={m.id}/>)
 
     const addMessage = () => {
-        if (state.newMessage) {
+        if (newMessage) {
             onAddMessage()
         }
 
@@ -40,7 +35,7 @@ const Dialogs = ({state, onAddMessage, onChangeMessage}: StateDialogsType) => {
                     <div className={s.send_message}>
             <textarea
                 onChange={onChangeNewMessageText}
-                value={state.newMessage}
+                value={newMessage}
                 placeholder={'Write your message'}
             />
                         <button onClick={addMessage}>Send message</button>

@@ -1,4 +1,10 @@
-import {SidebarType} from "./store";
+export type SidebarType = {
+  friends: Array<FriendType>
+}
+export type FriendType = {
+  id: number
+  name: string
+}
 
 export type SideBarActionsTypes = any;
 

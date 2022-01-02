@@ -22,7 +22,6 @@ const App = (props: AppPropsType) => {
             <div className='app-wrapper'>
                 <Header/>
                 <Sidebar/>
-                {/*<Sidebar state={props.state.sidebar.friends}/>*/}
                 <div className="container">
                     <main className='main'>
                         <Routes>
