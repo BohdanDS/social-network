@@ -8,7 +8,7 @@ import {PostsPropsType} from "./MyPostsContainer";
 
 const MyPosts = ({posts, updateNewPostText, onAddPost, }: PostsPropsType) => {
 
-    const postsElements = posts.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    const postsElements = posts.posts.map(p => <Post key = {p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
     const newPostElement = useRef<HTMLTextAreaElement>(null);
 
     const addPost = () => {

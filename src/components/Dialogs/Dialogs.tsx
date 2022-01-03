@@ -9,10 +9,10 @@ const Dialogs = ({dialogsItems, newMessage, onAddMessage, onChangeMessage, messa
 
 
     let dialogsElements = dialogsItems
-        .map(d => <DialogItem name={d.name} id={d.id}/>)
+        .map(d => <DialogItem key ={d.id} name={d.name} id={d.id}/>)
 
     let messagesElements = messages
-        .map(m => <Message message={m.message} id={m.id}/>)
+        .map(m => <Message key = {m.id} message={m.message} id={m.id}/>)
 
     const addMessage = () => {
         if (newMessage) {

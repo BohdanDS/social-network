@@ -1,10 +1,11 @@
+import {v1} from "uuid";
 export type DialogItemType = {
     name: string
-    id: number
+    id: string
 }
 export type MessageType = {
     message: string
-    id: number
+    id: string
 }
 export type DialogType = {
     dialogs: Array<DialogItemType>
@@ -22,18 +23,18 @@ export type DialogsActionsTypes =
 let initialState: DialogType = {
 
     dialogs: [
-        {id: 1, name: 'Mentos'},
-        {id: 2, name: 'Dimon'},
-        {id: 3, name: 'Farelnik'},
-        {id: 4, name: 'Kirill'},
-        {id: 5, name: 'Varvar'},
+        {id: v1(), name: 'Mentos'},
+        {id: v1(), name: 'Dimon'},
+        {id: v1(), name: 'Farelnik'},
+        {id: v1(), name: 'Kirill'},
+        {id: v1(), name: 'Varvar'},
     ],
     messages: [
-        {id: 1, message: "Hello!"},
-        {id: 2, message: "How are you?"},
-        {id: 3, message: 'PES!'},
-        {id: 4, message: "GG!"},
-        {id: 5, message: 'TEST'},
+        {id: v1(), message: "Hello!"},
+        {id: v1(), message: "How are you?"},
+        {id: v1(), message: 'PES!'},
+        {id: v1(), message: "GG!"},
+        {id: v1(), message: 'TEST'},
     ],
     newMessage: ''
 }
@@ -43,7 +44,7 @@ const dialogsReducer = (state: DialogType = initialState, action: DialogsActions
     switch (action.type) {
 
         case ADD_MESSAGE:
-            let newMessage: MessageType = {id: 5, message: state.newMessage};
+            let newMessage: MessageType = {id: v1(), message: state.newMessage};
             return {...state, messages: [...state.messages, newMessage], newMessage: ''}
 
         case UPDATE_NEW_MESSAGE_TEXT:

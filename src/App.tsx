@@ -9,14 +9,7 @@ import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-type AppPropsType = {
-    // store: StoreType
-    // state: StateType
-    // dispatch: (action: ActionsTypes) => void
-}
-
-const App = (props: AppPropsType) => {
-
+const App = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -25,6 +18,9 @@ const App = (props: AppPropsType) => {
                 <div className="container">
                     <main className='main'>
                         <Routes>
+                            <Route path='/'
+                                   element={<Profile/>}
+                            />
                             <Route path='/profile'
                                    element={<Profile/>}
                             />
