@@ -3,3 +3,16 @@
     height: 60px;
     border-radius: 50%;
 }
+
+.selectPage {
+    font-weight: bold;
+    margin: 10px;
+}
+
+.links {
+    margin: 10px;
+}
+
+.links:hover {
+    cursor: pointer;
+}

@@ -8,18 +8,63 @@ import {AppStateType} from "../../redux/redux-store";
 
 
 class Users extends React.Component<UsersPropsType, AppStateType> {
-    constructor(props: UsersPropsType) {
-        super(props);
-        axios.get<UsersType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            this.props.setUsers(response.data.items)
-        })
+
+
+    componentDidMount() {
+        //  const instance = axios.create({
+        //     withCredentials: true,
+        //     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+        //     headers:     {
+        //         "API-KEY": "fdbb564c-a244-4702-bf65-bab4b0fb11e9"
+        //     }
+        // });
+        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.totalUsersCount(response.data.totalCount)
+            })
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.selectCurrentPage(pageNumber)
+        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
     }
 
     render() {
 
-        return (
+        let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize)
+        console.log(pagesCount)
 
+        let pages = []
+        if (this.props.currentPage === 1) {
+            pages.push(this.props.currentPage)
+            pages.push(this.props.currentPage + 1)
+            pages.push(this.props.currentPage + 2)
+            // pages.push(pagesCount)
+        } else {
+            pages.push(this.props.currentPage - 1)
+            pages.push(this.props.currentPage)
+            pages.push(this.props.currentPage + 1)
+            // pages.push(pagesCount)
+        }
+
+        console.log('pages', pages)
+        return (
             <div>
+                <div className={style.links}>
+                    ...
+                    {pages.map(m => {
+                        return (
+                            <span key={m} className={this.props.currentPage === m ? style.selectPage : ''}
+                                  onClick={() => this.onPageChanged(m)}>{m}</span>
+                        )
+                    })}
+                    ...
+                </div>
+
                 {this.props.users.map(m => <div key={m.id}>
                 <span>
                     <div>
@@ -32,15 +77,11 @@ class Users extends React.Component<UsersPropsType, AppStateType> {
                     </div>
                 </span>
                     <span>
-                    <span>
-                        <div>{m.name}</div>
-                        <div>{m.status}</div>
+                        <span>
+                            <div>{m.name}</div>
+                            <div>{m.status}</div>
+                        </span>
                     </span>
-                    <span>
-                        {/*<div>{m.location.country}</div>*/}
-                        {/* <div>{m.location.city}</div>*/}
-                    </span>
-                </span>
                 </div>)}
             </div>
         );
