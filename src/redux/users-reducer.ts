@@ -19,19 +19,7 @@ export type UsersType = {
 }
 
 let initialState: UsersType = {
-    items: [
-        // {
-        //     id: 1,
-        //     photos: {
-        //         large: 'https://www.pngfind.com/pngs/m/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png',
-        //         small: ''
-        //     },
-        //     followed: true,
-        //     name: 'Bohdan Peliutkevich',
-        //     status: 'TEST MY Status0',
-        //     uniqueUrlName: ''
-        // }
-    ],
+    items: [],
     pageSize: 5,
     totalCount: 0,
     currentPage: 1,

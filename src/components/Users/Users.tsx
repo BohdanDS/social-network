@@ -2,6 +2,7 @@ import React from 'react';
 import style from "./Users.module.css";
 import userAvatar from "../../assets/images/userAvatar.png";
 import {UserType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     totalCount: number
@@ -11,7 +12,7 @@ type UsersPropsType = {
     users: Array<UserType>
     unFollow: (userId: number) => void
     follow: (userId: number) => void
-    isFetching:boolean
+    isFetching: boolean
 
 }
 
@@ -47,8 +48,10 @@ const Users = (props: UsersPropsType) => {
             {props.users.map(m => <div key={m.id}>
                 <span>
                     <div>
-                        <img alt={'imageHere'} className={style.img}
-                             src={m.photos.large ? m.photos.large : userAvatar}/>
+                        <NavLink to={`/profile/2`}>
+                            <img alt={'imageHere'} className={style.img}
+                                 src={m.photos.large ? m.photos.large : userAvatar}/>
+                        </NavLink>
                     </div>
                     <div>
                         {m.followed ? <button onClick={() => props.unFollow(m.id)}>Unfollow</button> :

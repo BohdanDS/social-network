@@ -78,30 +78,7 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
     }
 }
 
-//
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unFollow: (userId: number) => {
-//             dispatch(unfollowAC(userId))
-//         },
-//         setUsers: (users: Array<UserType>) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         selectCurrentPage: (page: number) => {
-//             dispatch(setCurrentPageAC(page))
-//         },
-//         totalUsersCount: (usersCount: number) => {
-//             dispatch(setTotalCountAC(usersCount))
-//         },
-//         toggleIsFetching: (isFetching: boolean) => {
-//             dispatch(setFetchingAC(isFetching))
-//         }
-//     }
-//
-// }
+
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const UsersContainer = connect(mapStateToProps, {
