@@ -105,7 +105,6 @@ export const updateNewPOstTextCreator = (text: string) => {
 }
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 export const setUserProfile = (profile: ProfileType) => {
-    console.log("setUserProfile AC", profile)
     return {
         type: 'SET-USER-PROFILE',
         payload: {
