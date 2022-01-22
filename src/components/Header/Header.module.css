@@ -6,16 +6,28 @@
     border-bottom: 1px solid #e5e7eb;
     display: flex;
     background-color: aquamarine;
-}
-.logo {
     display: flex;
     align-items: center;
-    font-size: 32px;
-    font-weight: 900;
-    font-style: italic;
+    justify-content: space-between;
 }
+
+.loginBlock img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.logo {
+}
+
 .logo img {
     max-width: 100px;
     margin-right: 16px;
     background-color: aquamarine;
+
+}
+
+.loginBlock {
+    color: #333333;
+    text-decoration-color: #333333;
 }

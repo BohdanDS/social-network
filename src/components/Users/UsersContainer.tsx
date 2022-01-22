@@ -46,7 +46,7 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
 
     componentDidMount() {
         this.props.setFetching(true)
-        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.setFetching(false)
                 this.props.setUsers(response.data.items)
@@ -57,7 +57,7 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setFetching(true)
-        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.setFetching(false)
                 this.props.setUsers(response.data.items)
@@ -82,12 +82,11 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const UsersContainer = connect(mapStateToProps, {
-        follow,
-        unFollow,
-        setUsers,
-        setCurrentPage,
-        setTotalCount,
-        setFetching,
-    }
-)(UsersAPIComponent)
+    follow,
+    unFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalCount,
+    setFetching,
+})(UsersAPIComponent)
 export default UsersContainer;
