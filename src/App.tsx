@@ -19,9 +19,6 @@ const App = () => {
                 <div className="container">
                     <main className='main'>
                         <Routes>
-                            {/*<Route path='/profile/*'*/}
-                            {/*       element={<ProfileContainer/>}*/}
-                            {/*/>*/}
                             <Route path='/profile'
                                    element={<ProfileContainer/>}
                             >
@@ -29,9 +26,6 @@ const App = () => {
                                        element={<ProfileContainer/>}
                                 />
                             </Route>
-                            {/*<Route path='/profile'*/}
-                            {/*       element={<Profile />}*/}
-                            {/*/>*/}
                             <Route path='/dialogs/*'
                                    element={<DialogsContainer/>}
                             />
