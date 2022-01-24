@@ -11,7 +11,6 @@ const Header = (props: HeaderPropsType) => {
                      alt='logo'/>
             </div>
             <div className={s.loginBlock}>
-                {/*{props.isAuth} && <img src={''}/>*/}
                 {props.isAuth ? <><img src={''}/> {props.userName}</> : <NavLink to={'/Login'}>Login</NavLink>}
             </div>
         </header>

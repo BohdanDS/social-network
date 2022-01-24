@@ -16,6 +16,8 @@ export type UsersType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: boolean
+    idOfUserInProcess: number | null
 }
 
 let initialState: UsersType = {
@@ -24,6 +26,8 @@ let initialState: UsersType = {
     totalCount: 0,
     currentPage: 1,
     isFetching: true,
+    followingInProgress: false,
+    idOfUserInProcess: null
 }
 
 const usersReducer = (state: UsersType = initialState, action: ActionTypes): UsersType => {
@@ -48,6 +52,9 @@ const usersReducer = (state: UsersType = initialState, action: ActionTypes): Use
         case "SET-FETCHING": {
             return {...state, ...action.payload}
         }
+        case "SET-ID-USER-IN-PROCESS": {
+            return {...state, ...action.payload}
+        }
         default:
             return state
     }
@@ -59,6 +66,7 @@ export type ActionTypes =
     | setCurrentPageType
     | setTotalCountType
     | setFetchingType
+    | setFollowingStateType
 
 export type followType = ReturnType<typeof follow>
 export const follow = (usedId: number) => {
@@ -112,6 +120,15 @@ export const setFetching = (isFetching: boolean) => {
         type: 'SET-FETCHING',
         payload: {
             isFetching
+        }
+    } as const
+}
+export type setFollowingStateType = ReturnType<typeof setFollowingState>
+export const setFollowingState = (idOfUserInProcess: number | null) => {
+    return {
+        type: 'SET-ID-USER-IN-PROCESS',
+        payload: {
+            idOfUserInProcess
         }
     } as const
 }

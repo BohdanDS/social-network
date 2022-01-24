@@ -4,16 +4,16 @@ import {
     follow,
     setCurrentPage,
     setFetching,
+    setFollowingState,
     setTotalCount,
     setUsers,
     unFollow,
-    UsersType,
     UserType,
 } from "../../redux/users-reducer";
 import React from "react";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../Preloader/Preloader";
+import {UserAPI} from "../../API/api";
 
 type MapStateToPropsType = {
     users: Array<UserType>,
@@ -21,6 +21,8 @@ type MapStateToPropsType = {
     totalCount: number,
     currentPage: number,
     isFetching: boolean,
+    followingInProgress: boolean,
+    idOfUserInProcess: number | null
 }
 type MapDispatchToPropsType = {
     follow: (userId: number) => void
@@ -29,6 +31,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setTotalCount: (usersCount: number) => void
     setFetching: (isFetching: boolean) => void
+    setFollowingState: (idOfUserInProcess: number | null) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -38,6 +41,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         totalCount: state.users.totalCount,
         currentPage: state.users.currentPage,
         isFetching: state.users.isFetching,
+        followingInProgress: state.users.followingInProgress,
+        idOfUserInProcess: state.users.idOfUserInProcess,
     }
 }
 
@@ -46,21 +51,21 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
 
     componentDidMount() {
         this.props.setFetching(true)
-        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
+        UserAPI.getUsers(this.props.currentPage, this.props.pageSize)
             .then(response => {
                 this.props.setFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
+                this.props.setUsers(response.items)
+                this.props.setTotalCount(response.totalCount)
             })
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setFetching(true)
-        axios.get<UsersType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {withCredentials: true})
+        UserAPI.getUsers(pageNumber, this.props.pageSize)
             .then(response => {
                 this.props.setFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(response.items)
             })
     }
 
@@ -72,7 +77,8 @@ class UsersAPIComponent extends React.Component<UsersPropsType, AppStateType> {
                 <Users totalCount={this.props.totalCount} users={this.props.users} currentPage={this.props.currentPage}
                        onPageChanged={this.onPageChanged} pageSize={this.props.pageSize} unFollow={this.props.unFollow}
                        follow={this.props.follow}
-                       isFetching={this.props.isFetching}/>
+                       isFetching={this.props.isFetching} setFollowingState={this.props.setFollowingState}
+                       followingInProgress={this.props.followingInProgress} idOfUserInProcess={this.props.idOfUserInProcess}/>
             </>
         );
     }
@@ -88,5 +94,6 @@ const UsersContainer = connect(mapStateToProps, {
     setCurrentPage,
     setTotalCount,
     setFetching,
+    setFollowingState
 })(UsersAPIComponent)
 export default UsersContainer;
