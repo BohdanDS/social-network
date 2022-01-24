@@ -16,7 +16,6 @@ export type UsersType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress: boolean
     idOfUserInProcess: number | null
 }
 
@@ -26,7 +25,6 @@ let initialState: UsersType = {
     totalCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: false,
     idOfUserInProcess: null
 }
 

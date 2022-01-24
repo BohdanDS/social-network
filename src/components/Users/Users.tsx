@@ -15,7 +15,6 @@ type UsersPropsType = {
     follow: (userId: number) => void
     isFetching: boolean
     setFollowingState: (idOfUserInProcess: number | null) => void
-    followingInProgress: boolean
     idOfUserInProcess: number | null
 }
 
