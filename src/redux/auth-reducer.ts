@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {authorizeUser} from "../API/api";
+
 export type initialStateType = {
     id: number | null
     email: string | null
@@ -36,6 +39,18 @@ export const authUser = (id: number, email: string, login: string) => {
             login
         }
     } as const
+}
+
+export const authorizeCurrentUser = () => (dispatch: Dispatch) => {
+    return (
+        authorizeUser().then(response => {
+                if (response.data.resultCode === 0) {
+                    let schema = response.data.data
+                    dispatch(authUser(schema.id, schema.email, schema.login))
+                }
+            }
+        )
+    )
 }
 
 export default authReducer

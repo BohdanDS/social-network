@@ -1,3 +1,6 @@
+import {FollowAPI, getUserProfileById, UserAPI} from "../API/api";
+import {Dispatch} from "redux";
+
 export type UserType = {
     followed: boolean
     id: number
@@ -75,6 +78,8 @@ export const follow = (usedId: number) => {
         }
     } as const
 }
+
+
 export type unfollowType = ReturnType<typeof unFollow>
 export const unFollow = (usedId: number) => {
     return {
@@ -84,7 +89,6 @@ export const unFollow = (usedId: number) => {
         }
     } as const
 }
-
 export type setUsersType = ReturnType<typeof setUsers>
 export const setUsers = (users: Array<UserType>) => {
     return {
@@ -131,4 +135,35 @@ export const setFollowingState = (idOfUserInProcess: number | null) => {
     } as const
 }
 
+export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(setFetching(true))
+    UserAPI.getUsers(currentPage, pageSize)
+        .then(response => {
+            dispatch(setFetching(false))
+            dispatch(setUsers(response.items))
+            dispatch(setTotalCount(response.totalCount))
+        })
+}
+
+export const removeFollowing = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(setFollowingState(userId))
+    FollowAPI.unFollowUser(userId).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(unFollow(userId))
+        }
+        dispatch(setFollowingState(null))
+    })
+}
+
+export const startFollowing = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(setFollowingState(userId))
+    FollowAPI.followUser(userId).then(
+        response => {
+            if (response.data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(setFollowingState(null))
+        }
+    )
+}
 export default usersReducer

@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {getUserProfileById} from "../API/api";
 
 
 export type PostType = {
@@ -112,6 +114,14 @@ export const setUserProfile = (profile: ProfileType) => {
         },
     } as const
 }
+
+export const getProfileById = (userId: number) => (dispatch: Dispatch) => {
+    getUserProfileById(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+}
+
 
 export default profileReducer;
 

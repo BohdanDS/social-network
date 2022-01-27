@@ -3,7 +3,6 @@ import style from "./Users.module.css";
 import userAvatar from "../../assets/images/userAvatar.png";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {FollowAPI} from "../../API/api";
 
 type UsersPropsType = {
     totalCount: number
@@ -11,11 +10,9 @@ type UsersPropsType = {
     currentPage: number
     onPageChanged: (page: number) => void
     users: Array<UserType>
-    unFollow: (userId: number) => void
-    follow: (userId: number) => void
-    isFetching: boolean
-    setFollowingState: (idOfUserInProcess: number | null) => void
     idOfUserInProcess: number | null
+    removeFollowing: (userId: number) => void
+    startFollowing: (userId: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -56,24 +53,10 @@ const Users = (props: UsersPropsType) => {
                     <div>
                         {m.followed ?
                             <button disabled={m.id === props.idOfUserInProcess} onClick={() => {
-                                props.setFollowingState(m.id)
-                                FollowAPI.unFollowUser(m.id).then(response => {
-                                    if (response.data.resultCode === 0) {
-                                        props.unFollow(m.id)
-                                    }
-                                    props.setFollowingState(null)
-                                })
+                                props.removeFollowing(m.id)
                             }}>Unfollow</button> :
                             <button disabled={m.id === props.idOfUserInProcess} onClick={() => {
-                                props.setFollowingState(m.id)
-                                FollowAPI.followUser(m.id).then(
-                                    response => {
-                                        if (response.data.resultCode === 0) {
-                                            props.follow(m.id)
-                                        }
-                                        props.setFollowingState(null)
-                                    }
-                                )
+                                props.startFollowing(m.id)
                             }}>Follow</button>}
                     </div>
                 </span>
