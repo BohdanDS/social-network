@@ -8,11 +8,11 @@ type ProfilePropsType = {
 }
 
 const Profile = (props: ProfilePropsType) => {
-    console.log('Profile:', props)
     return (
         <div className='content'>
             <ProfileInfo aboutMe={props.profile.aboutMe} fullName={props.profile.fullName} photos={props.profile.photos}
-                         userId={props.profile.userId} contacts={props.profile.contacts} lookingForAJob={props.profile.lookingForAJob}
+                         userId={props.profile.userId} contacts={props.profile.contacts}
+                         lookingForAJob={props.profile.lookingForAJob}
                          lookingForAJobDescription={props.profile.lookingForAJobDescription}
             />
             <MyPostsContainer/>

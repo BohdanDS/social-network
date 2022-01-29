@@ -25,7 +25,6 @@ type ProfileInfoType = {
 
 
 const ProfileInfo = (props: ProfileInfoType) => {
-    console.log(props)
     return (
         <div>
             <div className={s.author}>

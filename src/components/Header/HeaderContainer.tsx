@@ -12,9 +12,7 @@ class HeaderAPIComponent extends React.Component<HeaderPropsType, AppStateType> 
     }
 
     render() {
-        return <Header isAuth={this.props.isAuth} authUser={this.props.authUser} userName={this.props.userName}
-                       authorizeCurrentUser={this.props.authorizeCurrentUser}
-        />
+        return <Header isAuth={this.props.isAuth} userName={this.props.userName}/>
     }
 
 }
