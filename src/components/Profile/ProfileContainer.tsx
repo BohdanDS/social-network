@@ -48,7 +48,7 @@ export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType & Wi
 
 
 export default compose<React.ComponentType>(
-    WithAuthRedirect,
+    // WithAuthRedirect,
     withRouter,
     connect(mapStateToProps, {
         setUserProfile,

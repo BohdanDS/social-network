@@ -1,33 +1,33 @@
 export {}
-type SidebarType = {
-  friends: Array<FriendType>
-}
- type FriendType = {
-  id: number
-  name: string
-}
-type PostProps = {
-  id: number,
-  message: string,
-  likesCount: number
-}
-type PostsType = {
-  posts: Array<PostProps>
-  newPostText: string
-}
-type DialogItemType = {
-  name: string
-  id: number
-}
-type MessageType = {
-  message: string
-  id: number
-}
-type DialogPropsType = {
-  dialogs: Array<DialogItemType>
-  messages: Array<MessageType>
-  newMessage: string
-}
+// type SidebarType = {
+//   friends: Array<FriendType>
+// }
+//  type FriendType = {
+//   id: number
+//   name: string
+// }
+// type PostProps = {
+//   id: number,
+//   message: string,
+//   likesCount: number
+// }
+// type PostsType = {
+//   posts: Array<PostProps>
+//   newPostText: string
+// }
+// type DialogItemType = {
+//   name: string
+//   id: number
+// }
+// type MessageType = {
+//   message: string
+//   id: number
+// }
+// type DialogPropsType = {
+//   dialogs: Array<DialogItemType>
+//   messages: Array<MessageType>
+//   newMessage: string
+// }
 // export type StateType = {
 //   profilePage: PostsType
 //   dialogsPage: DialogPropsType
