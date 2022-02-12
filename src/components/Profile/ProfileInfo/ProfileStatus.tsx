@@ -1,13 +1,19 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
+import {getProfileStatus} from "../../../redux/profile-reducer";
 
 type ProfileStatusPropsType = {
     status: string
+    updateProfileStatus: (newStatus: string) => void
+    userId:number
 }
 
-const ProfileStatus = ({status}: ProfileStatusPropsType) => {
+const ProfileStatus = ({status, updateProfileStatus,userId}: ProfileStatusPropsType) => {
 
+    const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(getProfileStatus(userId))
         setInputValue(status)
     }, [status])
 
@@ -23,6 +29,7 @@ const ProfileStatus = ({status}: ProfileStatusPropsType) => {
     const onSaveClick = () => {
         setEditable(false)
         setInputValue(inputValue)
+        inputValue && updateProfileStatus(inputValue)
     }
 
     return (
@@ -39,3 +46,4 @@ const ProfileStatus = ({status}: ProfileStatusPropsType) => {
 };
 
 export default ProfileStatus;
+

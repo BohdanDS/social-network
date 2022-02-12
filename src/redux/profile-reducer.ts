@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
-import {getUserProfileById} from "../API/api";
+import {getUserProfileById, ProfileAPI} from "../API/api";
 
 
 export type PostType = {
@@ -15,6 +15,7 @@ export type ProfileType = {
         large: string
         small: string
     },
+    status: string
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -42,7 +43,10 @@ const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 export type ProfileActionsTypes =
     ReturnType<typeof addPostCreator>
-    | ReturnType<typeof updateNewPOstTextCreator> | setUserProfileType
+    | ReturnType<typeof updateNewPOstTextCreator>
+    | setUserProfileType
+    | ReturnType<typeof getUserProfileStatus>
+    | ReturnType<typeof updateUserProfileStatus>
 
 let initialState: PostsType = {
     posts: [],
@@ -58,6 +62,7 @@ let initialState: PostsType = {
             large: '',
             small: ''
         },
+        status: '',
         userId: 1,
         lookingForAJob: true,
         lookingForAJobDescription: '',
@@ -86,11 +91,17 @@ const profileReducer = (state: PostsType = initialState, action: ProfileActionsT
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile}
         }
+        case "GET-USER-PROFILE": {
+            return {...state, profile: {...state.profile, status: action.status}}
+        }
+        case "UPDATE-STATUS": {
+            return {...state, profile: {...state.profile, status: action.newStatus}}
+        }
         default:
             return state;
     }
 }
-
+//ACTION CREATORS
 export const addPostCreator = () => {
     return {
         type: "ADD-POST"
@@ -115,6 +126,21 @@ export const setUserProfile = (profile: ProfileType) => {
     } as const
 }
 
+export const getUserProfileStatus = (userId: number, status: string) => {
+    return {
+        type: 'GET-USER-PROFILE',
+        userId,
+        status,
+    } as const
+}
+export const updateUserProfileStatus = (newStatus: string) => {
+    return {
+        type: 'UPDATE-STATUS',
+        newStatus
+    } as const
+}
+
+//THUNK
 export const getProfileById = (userId: number) => (dispatch: Dispatch) => {
     getUserProfileById(userId)
         .then(response => {
@@ -122,6 +148,18 @@ export const getProfileById = (userId: number) => (dispatch: Dispatch) => {
         })
 }
 
+export const getProfileStatus = (userId: number) => (dispatch: Dispatch) => {
+    ProfileAPI.getStatus(userId)
+        .then(response => {
+            console.log(response.data)
+            dispatch(getUserProfileStatus(userId, response.data))
+        })
+}
+
+export const updateProfileStatus = (newStatus: string) => (dispatch: Dispatch) => {
+    ProfileAPI.updateStatus(newStatus)
+        .then(console.log)
+}
 
 export default profileReducer;
 

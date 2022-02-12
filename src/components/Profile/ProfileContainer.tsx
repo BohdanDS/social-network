@@ -2,7 +2,13 @@ import React from 'react';
 import {AppStateType} from "../../redux/redux-store";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfileById, ProfileType, setUserProfile} from "../../redux/profile-reducer";
+import {
+    getProfileById,
+    getProfileStatus,
+    ProfileType,
+    setUserProfile,
+    updateProfileStatus
+} from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/users-reducer";
 import {withRouter, WithRouterType} from "../WithRouter/withRouter";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -12,6 +18,8 @@ type MapDispatchToPropsType = {
     setFetching: (isFetching: boolean) => void
     setUserProfile: (profile: any) => void
     getProfileById: (userId: number) => void
+    getProfileStatus: (userId:number)=>void
+    updateProfileStatus:(newStatus:string)=>void
 
 }
 
@@ -24,15 +32,16 @@ class ProfileContainer extends React.Component<ProfilePropsType, AppStateType> {
     componentDidMount() {
         let userId = this.props.router.params.userId
         if (!userId) {
-            userId = 2
+            userId = 21643
         }
         this.props.getProfileById(userId)
+        this.props.getProfileStatus(userId)
     }
 
     render() {
         return (
             <div className='content'>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile} updateProfileStatus={this.props.updateProfileStatus} />
             </div>
         );
     }
@@ -41,7 +50,7 @@ class ProfileContainer extends React.Component<ProfilePropsType, AppStateType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        profile: state.profilePage.profile,
+        profile: state.profilePage.profile
     }
 }
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType & WithRouterType
@@ -53,7 +62,9 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         setUserProfile,
         setFetching,
-        getProfileById
+        getProfileById,
+        getProfileStatus,
+        updateProfileStatus
     })
 )
 (ProfileContainer)

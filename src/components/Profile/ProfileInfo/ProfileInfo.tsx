@@ -10,6 +10,7 @@ type ProfileInfoType = {
         small: string
     },
     userId: number
+    status:string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     contacts: {
@@ -21,18 +22,22 @@ type ProfileInfoType = {
         "youtube": string,
         "github": string,
         "mainLink": string
-    }
+    },
+    updateProfileStatus:(newStatus:string)=>void
 }
 
 
 const ProfileInfo = (props: ProfileInfoType) => {
+
+
+
     return (
         <div>
             <div className={s.author}>
                 <div className={s.author_avatar}>
                     <h2>My profile page</h2>
                     <h4>{props.fullName}</h4>
-                    <ProfileStatus status={props.aboutMe}/>
+                    <ProfileStatus status={props.status} updateProfileStatus={props.updateProfileStatus} userId={props.userId}/>
                     <img
                         src="https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=2560&h=400&fm=webp"
                         alt=""/>
