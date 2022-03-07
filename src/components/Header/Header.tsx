@@ -5,9 +5,11 @@ import {NavLink} from "react-router-dom";
 type HeaderType = {
     isAuth: boolean
     userName: string | null
+    logOut:() =>void
 }
 
 const Header = (props: HeaderType) => {
+
     return (
         <header className={s.header}>
             <div className={s.logo}>
@@ -15,7 +17,9 @@ const Header = (props: HeaderType) => {
                      alt='logo'/>
             </div>
             <div className={s.loginBlock}>
-                {props.isAuth ? <><img src={''}/> {props.userName}</> : <NavLink to={'/Login'}>Login</NavLink>}
+                {props.isAuth ? <><img src={''}/> {props.userName}
+                    <button onClick={props.logOut}>Logout</button>
+                </> : <NavLink to={'/Login'}>Login</NavLink>}
             </div>
         </header>
     )

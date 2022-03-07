@@ -31,7 +31,7 @@ let initialState: UsersType = {
     idOfUserInProcess: null
 }
 
-const usersReducer = (state: UsersType = initialState, action: ActionTypes): UsersType => {
+const usersReducer = (state: UsersType = initialState, action: UsersActionTypes): UsersType => {
     switch (action.type) {
         case "FOLLOW":
             return {
@@ -60,7 +60,7 @@ const usersReducer = (state: UsersType = initialState, action: ActionTypes): Use
             return state
     }
 }
-export type ActionTypes =
+export type UsersActionTypes =
     followType
     | unfollowType
     | setUsersType

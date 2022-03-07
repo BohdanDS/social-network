@@ -25,14 +25,16 @@ type MapDispatchToPropsType = {
 
 type MapStateToPropsType = {
     profile: ProfileType
+    userId:number | null
+    isAuth:boolean
 }
 
 class ProfileContainer extends React.Component<ProfilePropsType, AppStateType> {
 
     componentDidMount() {
         let userId = this.props.router.params.userId
-        if (!userId) {
-            userId = 21643
+        if (!userId && this.props.userId) {
+            userId = this.props.userId
         }
         this.props.getProfileById(userId)
         this.props.getProfileStatus(userId)
@@ -50,7 +52,9 @@ class ProfileContainer extends React.Component<ProfilePropsType, AppStateType> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        userId: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType & WithRouterType

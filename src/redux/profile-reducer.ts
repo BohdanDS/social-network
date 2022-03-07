@@ -39,11 +39,9 @@ export type PostsType = {
 }
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 export type ProfileActionsTypes =
     ReturnType<typeof addPostCreator>
-    | ReturnType<typeof updateNewPOstTextCreator>
     | setUserProfileType
     | ReturnType<typeof getUserProfileStatus>
     | ReturnType<typeof updateUserProfileStatus>
@@ -82,12 +80,8 @@ let initialState: PostsType = {
 const profileReducer = (state: PostsType = initialState, action: ProfileActionsTypes): PostsType => {
     switch (action.type) {
         case ADD_POST:
-            let newPost: PostType = {id: v1(), message: state.newPostText, likesCount: 0};
+            let newPost: PostType = {id: v1(), message: action.postText, likesCount: 0};
             return {...state, posts: [...state.posts, newPost], newPostText: ''}
-
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.payload.newText;
-            return {...state, newPostText: action.payload.newText};
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile}
         }
@@ -102,19 +96,12 @@ const profileReducer = (state: PostsType = initialState, action: ProfileActionsT
     }
 }
 //ACTION CREATORS
-export const addPostCreator = () => {
+export const addPostCreator = (postText: string) => {
     return {
-        type: "ADD-POST"
+        type: "ADD-POST",
+        postText
     } as const
 
-}
-export const updateNewPOstTextCreator = (text: string) => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        payload: {
-            newText: text
-        },
-    } as const
 }
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 export const setUserProfile = (profile: ProfileType) => {
@@ -151,14 +138,12 @@ export const getProfileById = (userId: number) => (dispatch: Dispatch) => {
 export const getProfileStatus = (userId: number) => (dispatch: Dispatch) => {
     ProfileAPI.getStatus(userId)
         .then(response => {
-            console.log(response.data)
             dispatch(getUserProfileStatus(userId, response.data))
         })
 }
 
 export const updateProfileStatus = (newStatus: string) => (dispatch: Dispatch) => {
     ProfileAPI.updateStatus(newStatus)
-        .then(console.log)
 }
 
 export default profileReducer;

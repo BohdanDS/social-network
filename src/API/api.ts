@@ -17,6 +17,22 @@ export const UserAPI = {
     }
 }
 
+export const authorizeUser = () => {
+    return instance.get('auth/me')
+}
+export const Auth = {
+    authMe() {
+        return instance.get('auth/me')
+    },
+    loginByCredentials(email: string, password: string, rememberMe: boolean) {
+        return instance.post('auth/login', {email, password, rememberMe})
+    },
+    logOut() {
+        return instance.delete('auth/login')
+    }
+
+}
+
 export const ProfileAPI = {
     getStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
@@ -38,8 +54,4 @@ export const FollowAPI = {
 
 export const getUserProfileById = (userId: number) => {
     return instance.get(`profile/${userId}`)
-}
-
-export const authorizeUser = () => {
-    return instance.get('auth/me')
 }
