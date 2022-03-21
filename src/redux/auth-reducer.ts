@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {Auth, authorizeUser} from "../API/api";
 import {AppThunk} from "./redux-store";
 import {stopSubmit} from "redux-form";
@@ -45,20 +44,17 @@ export const authUser = (id: number | null, email: string | null, password: stri
     } as const
 }
 //THUNK
-export const authorizeCurrentUser = () => (dispatch: Dispatch) => {
-    return (
-        authorizeUser().then(response => {
-                if (response.data.resultCode === 0) {
-                    let schema = response.data.data
-                    dispatch(authUser(schema.id, schema.email, schema.login, true))
-                }
+export const authorizeCurrentUser = (): AppThunk => (dispatch): Promise<void> => {
+    return authorizeUser().then(response => {
+            if (response.data.resultCode === 0) {
+                let schema = response.data.data
+                dispatch(authUser(schema.id, schema.email, schema.login, true))
             }
-        )
+        }
     )
 }
 
 export const loginUser = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
-
     Auth.loginByCredentials(email, password, rememberMe)
         .then((response) => {
             if (response.data.resultCode === 0) {
